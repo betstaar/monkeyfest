@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invitación de Cumpleaños</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0F0F23, #1A0B3D, #2D1B69);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Fredoka', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .confeti-container {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .confeti-piece {
+      position: absolute;
+      width: 50px;
+      height: 20px;
+      background-color: 200, 180, 220;
+      opacity: 0.85;
+      animation-name: caerConfeti;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.1));
+    }
+
+    @keyframes caerConfeti {
+      0% { transform: translateY(-30px) translateX(0) rotate(0deg); }
+      100% { transform: translateY(110vh) translateX(-50px) rotate(1080deg); }
+    }
+
+    .invitacion {
+      position: relative;
+      z-index: 1;
+      background-color: #2f0053dd;
+      border: 2px solid rgb(151, 91, 211);
+      border-radius: 20px;
+      padding: 25px;
+      max-width: 400px;
+      text-align: center;
+      margin: 20px auto;
+      font-size: 16px;
+      box-shadow: 0 0 15px rgba(200, 180, 220);
+      font-family: 'Fredoka', sans-serif;
+      animation: aparecer 1s ease forwards, brillo 8s infinite alternate, flotarTarjeta 8s ease-in-out infinite;
+      opacity: 0;
+      /* Ajuste clave para dispositivos móviles */
+      width: 90%;
+      box-sizing: border-box;
+    }
+
+    .invitacion {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgb(126, 71, 181);
+    }
+
+    @keyframes aparecer {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes brillo {
+      0% { box-shadow: 0 0 15px rgba(200, 180, 220); }
+      100% { box-shadow: 0 0 30px rgba(200, 180, 220); }
+    }
+
+    @keyframes flotarTarjeta {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    h1 {
+      color: rgb(151, 68, 207);
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #ff00ff;
+    }
+
+    /* Estilos para los botones */
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      font-family: inherit;
+    }
+
+    /* Contenedor de los botones */
+    .botones {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .asistir {
+      background-color: #007BFF;
+      color: white;
+    }
+    .asistir, .talvez {
+      background: linear-gradient(90deg, #ffff00 0%, #ccff00 50%, #ffff00 100%);
+      color: #000;
+      font-weight: bold;
+      font-size: 18px;
+      border: none;
+      padding: 12px 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
+      border-radius: 50px;
+      clip-path: polygon(0% 30%, 10% 0%, 90% 0%, 100% 30%, 100% 70%, 90% 100%, 10% 100%, 0% 70%);
+    }
+
+    .asistir:hover, .talvez:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 255, 0, 1), 0 0 40px rgba(204, 255, 0, 0.9);
+      filter: brightness(1.2);
+    }
+
+    .talvez {
+      background: linear-gradient(90deg, #9933ff 0%, #cc00ff 50%, #9933ff 100%);
+      box-shadow: 0 0 15px rgba(153, 51, 255, 0.7);
+    }
+
+    .talvez:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(153, 51, 255, 1), 0 0 40px rgba(204, 0, 255, 0.9);
+      filter: brightness(1.2);
+    }
+    .talvez {
+      background-color: rgb(154, 64, 213);
+      color: white;
+    }
+
+    #reloj {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
+      color: #222;
+      margin-top: 25px;
+      letter-spacing: 2px;
+      background: #000;
+      padding: 10px 20px;
+      border-radius: 10px;
+      color: #9c54a0;
+      display: inline-block;
+    }
+
+    .etiquetas {
+      font-size: 14px;
+      margin-top: 5px;
+      color: #fff;
+      display: flex;
+      justify-content: space-around;
+      max-width: 350px;
+      margin: 5px auto 0;
+    }
+
+    .ubicacion { margin-top: 25px; }
+
+    .ubicacion a {
+      text-decoration: none;
+      background: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+
+    .ubicacion a:hover { background: #218838; }
+
+    body.fiestero {
+      background: linear-gradient(135deg, #000, #111);
+      animation: coloresFiesta 4s infinite alternate;
+      background-size: 400% 400%;
+      background-attachment: fixed;
+    }
+
+    .invitacion.fiestera {
+      border: 3px solid #ff00ff;
+      background: #000000cc;
+      color: #0ff;
+      opacity: 1 !important;
+      transform: translateY(0) scale(1) !important;
+      animation: brillarFiesta 1s infinite alternate, flotarTarjeta 4s ease-in-out infinite;
+      box-shadow: 0 0 30px #ff00ff;
+    }
+
+    @keyframes coloresFiesta {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes brillarFiesta {
+      0% { box-shadow: 0 0 10px #ff00ff; }
+      100% { box-shadow: 0 0 30px #00ffff; }
+    }
+
+    .invitacion.fiestera::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      background: linear-gradient(270deg, #ff00ff, #00ffff, #39ff14, #ffff00, #ff5733, #ff00ff);
+      background-size: 600% 600%;
+      border-radius: 24px;
+      z-index: -1;
+      animation: rainbowBorder 6s ease infinite;
+    }
+
+    @keyframes rainbowBorder {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #modoFiestaBtn, #modoUltraFiestaBtn {
+      background: #ff00ff;
+      color: white;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    }
+
+    #modoFiestaBtn:hover, #modoUltraFiestaBtn:hover {
+      background: #e000e0;
+      transform: scale(1.05);
+    }
+
+    .btn-musica {
+      background: #ff5722;
+      color: white;
+      font-weight: bold;
+    }
+
+    .confirmacion-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: #ff00ff;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      opacity: 0;
+      z-index: 9999;
+      box-shadow: 0 0 15px #c106c1;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      width: fit-content;
+      max-width: 90vw;
+      white-space: nowrap;
+    }
+
+    .confirmacion-popup.mostrar {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .party-container {
+      text-align: center;
+      position: relative;
+    }
+
+    .title {
+      font-size: 1.5em;
+      color: #8B4513;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      animation: bounce 2s infinite;
+      color: #ffffff;
+    }
+
+    /* =====================================================
+       MONITO 3D (nueva animación, un solo sombrero)
+       ===================================================== */
+    .monkey-container {
+      position: relative;
+      display: block;
+      width: 240px;
+      height: 310px;
+      margin: 0 auto;
+      perspective: 700px;
+    }
+    .monkey-container * { box-sizing: border-box; }
+
+    .shadow {
+      position: absolute;
+      left: 60px;
+      top: 282px;
+      width: 120px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.35);
+      filter: blur(3px);
+      z-index: -1;
+      animation: shadow 1s ease-in-out infinite;
+    }
+
+    .monkey {
+      position: absolute;
+      left: 70px;
+      top: 120px;
+      width: 100px;
+      height: 120px;
+      border-radius: 50px 50px 46px 46px;
+      background: radial-gradient(ellipse at 32% 28%, #9a5424 0%, #6b3109 38%, #4a1f02 70%, #2a1100 100%);
+      border: 1px solid #12100f;
+      box-shadow: inset -14px -16px 24px rgba(0,0,0,.55), inset 8px 8px 16px rgba(255,170,90,.22), 0 14px 20px rgba(0,0,0,.3);
+      transform-origin: 50% 100%;
+      will-change: transform;
+      animation: groove 1s ease-in-out infinite;
+    }
+    .monkey::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 26px;
+      width: 62px;
+      height: 76px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at 38% 30%, #f3c88e 0%, #e0a96d 45%, #b57a40 100%);
+      box-shadow: inset -6px -8px 12px rgba(90,40,5,.45), 0 0 8px rgba(0,0,0,.25);
+    }
+
+    .head {
+      position: absolute;
+      top: -60px;
+      left: 10px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 28%, #a35a28 0%, #6b3109 45%, #3b1800 100%);
+      border: 1px solid #11100f;
+      box-shadow: inset -10px -12px 18px rgba(0,0,0,.5), inset 6px 6px 12px rgba(255,170,90,.2), 0 6px 10px rgba(0,0,0,.3);
+      transform-origin: 50% 100%;
+      will-change: transform;
+      animation: headBob 1s ease-in-out infinite;
+    }
+
+    /* Único sombrero: el de arriba */
+    .party-hat {
+      position: absolute;
+      top: -52px;
+      left: 15px;
+      width: 50px;
+      height: 60px;
+      transform-origin: 50% 100%;
+      animation: hatWobble .5s ease-in-out infinite alternate;
+    }
+    .party-hat::after {
+      content: "";
+      position: absolute;
+      left: -4px;
+      bottom: -3px;
+      width: 58px;
+      height: 8px;
+      border-radius: 4px;
+      background: #ffd400;
+    }
+    .hat-stripes {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(45deg, #00FFFF 0px, #00FFFF 10px, #FF00FF 10px, #FF00FF 20px, #00FF00 20px, #00FF00 30px, #FFFF00 30px, #FFFF00 40px);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      animation: neonRainbowShift 1s infinite linear;
+      filter: drop-shadow(0 0 10px #00FFFF);
+    }
+    .hat-pompom {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      margin-left: -6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #FFFF00, #00FFFF);
+      box-shadow: 0 0 15px #FFFF00, 0 0 25px #00FFFF;
+      animation: pompom .5s ease-in-out infinite alternate;
+    }
+
+    .ear {
+      position: absolute;
+      top: 28px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #9a5424, #4a1f02);
+      border: 1px solid #11100f;
+      box-shadow: inset -4px -5px 7px rgba(0,0,0,.45), 0 3px 5px rgba(0,0,0,.3);
+      animation: earFlap .5s ease-in-out infinite alternate;
+    }
+    .ear::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #f0c08a, #c98d52);
+      box-shadow: inset 2px 2px 4px rgba(90,40,5,.45);
+    }
+    .ear.left { left: -13px; transform-origin: 100% 50%; }
+    .ear.right { right: -13px; transform-origin: 0 50%; animation-direction: alternate-reverse; }
+
+    .face {
+      position: absolute;
+      left: 14px;
+      top: 36px;
+      width: 52px;
+      height: 38px;
+      border-radius: 50%;
+      background: #e0a96d;
+    }
+    .eye {
+      position: absolute;
+      top: 26px;
+      width: 11px;
+      height: 13px;
+      border-radius: 50%;
+      background: #111;
+      transform-origin: 50% 50%;
+      animation: blink 4s infinite;
+    }
+    .eye::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .eye.left { left: 20px; }
+    .eye.right { left: 49px; }
+    .nose {
+      position: absolute;
+      left: 37px;
+      top: 46px;
+      width: 7px;
+      height: 5px;
+      border-radius: 50%;
+      background: #3a1a05;
+      animation: noseWiggle 2s infinite ease-in-out;
+    }
+    .mouth {
+      position: absolute;
+      left: 31px;
+      top: 57px;
+      width: 18px;
+      height: 10px;
+      border-radius: 0 0 18px 18px;
+      background: #7a1f1f;
+      border: 2px solid #3a1a05;
+      border-top-width: 1px;
+      transform-origin: 50% 0;
+      animation: sing .5s ease-in-out infinite alternate;
+    }
+
+    .arm {
+      position: absolute;
+      top: 12px;
+      width: 15px;
+      height: 50px;
+      border-radius: 15px;
+      background: linear-gradient(90deg, #2e1301 0%, #5c2702 22%, #9a5424 42%, #6b3109 62%, #2e1301 100%);
+      border: 1px solid #171716;
+      box-shadow: 0 4px 6px rgba(0,0,0,.35);
+      transform-origin: 50% 8px;
+      will-change: transform;
+    }
+    .arm::after {
+      content: "";
+      position: absolute;
+      left: -3px;
+      bottom: -6px;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #a35a28, #3b1800);
+      border: 1px solid #171716;
+      box-shadow: inset -3px -4px 5px rgba(0,0,0,.45);
+    }
+    .arm.left { left: -3px; animation: armL 1s ease-in-out infinite; }
+    .arm.right { right: -3px; animation: armR 1s ease-in-out infinite; }
+
+    .leg {
+      position: absolute;
+      bottom: -35px;
+      width: 18px;
+      height: 40px;
+      border-radius: 15px;
+      background: linear-gradient(90deg, #2e1301 0%, #5c2702 22%, #9a5424 42%, #6b3109 62%, #2e1301 100%);
+      border: 1px solid #0d0805;
+      box-shadow: 0 5px 7px rgba(0,0,0,.35);
+      transform-origin: 50% 0;
+      will-change: transform;
+    }
+    .leg::after {
+      content: "";
+      position: absolute;
+      left: -4px;
+      bottom: -4px;
+      width: 26px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at 35% 30%, #a35a28, #3b1800);
+      border: 1px solid #0d0805;
+      box-shadow: inset -3px -3px 5px rgba(0,0,0,.45);
+    }
+    .leg.left { left: 16px; animation: legL 1s ease-in-out infinite; }
+    .leg.right { right: 16px; animation: legR 1s ease-in-out infinite; }
+
+    .tail {
+      position: absolute;
+      right: -12px;
+      top: 78px;
+      width: 14px;
+      height: 75px;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #2e1301 0%, #5c2702 22%, #9a5424 42%, #6b3109 62%, #2e1301 100%);
+      border: 1px solid #000;
+      box-shadow: 3px 4px 6px rgba(0,0,0,.3);
+      transform-origin: 50% 0;
+      animation: tailWag .5s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+    .tail-tip {
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #a35a28, #3b1800);
+      animation: tailTipBounce 0.8s infinite ease-in-out;
+    }
+
+    /* Animaciones del monito (ritmo: 1s = 2 pasos de baile) */
+    @keyframes groove {
+      0%, 100% { transform: translateY(0) rotateY(-14deg) rotate(-4deg) scale(1.05,.93); }
+      25% { transform: translateY(-24px) rotateY(-5deg) rotate(-1deg) scale(.97,1.05); }
+      50% { transform: translateY(0) rotateY(14deg) rotate(4deg) scale(1.05,.93); }
+      75% { transform: translateY(-24px) rotateY(5deg) rotate(1deg) scale(.97,1.05); }
+    }
+    @keyframes shadow {
+      0%, 50%, 100% { transform: scale(1); opacity: .4; }
+      25%, 75% { transform: scale(.7); opacity: .2; }
+    }
+    @keyframes headBob {
+      0%, 100% { transform: rotateY(10deg) rotate(-9deg) translateY(0); }
+      25% { transform: rotate(-2deg) translateY(-4px); }
+      50% { transform: rotateY(-10deg) rotate(9deg) translateY(0); }
+      75% { transform: rotate(2deg) translateY(-4px); }
+    }
+    @keyframes hatWobble { from { transform: rotate(-7deg); } to { transform: rotate(7deg); } }
+    @keyframes pompom { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+    @keyframes earFlap { from { transform: rotate(-10deg) scale(1); } to { transform: rotate(10deg) scale(1.08); } }
+    @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+    @keyframes sing { from { transform: scaleY(.45); } to { transform: scaleY(1.1); } }
+    @keyframes armL { 0%, 100% { transform: rotate(150deg); } 50% { transform: rotate(25deg); } }
+    @keyframes armR { 0%, 100% { transform: rotate(-25deg); } 50% { transform: rotate(-150deg); } }
+    @keyframes legL { 0%, 50%, 100% { transform: translateY(0) rotate(0); } 25% { transform: translateY(-10px) rotate(-14deg); } }
+    @keyframes legR { 0%, 25%, 100% { transform: translateY(0) rotate(0); } 75% { transform: translateY(-10px) rotate(14deg); } }
+    @keyframes tailWag { from { transform: rotate(-28deg); } to { transform: rotate(28deg); } }
+
+    /* Animaciones para el modo ultra fiesta */
+    body.ultra-fiestero {
+      animation: neonBackground 0.8s infinite alternate;
+      background-size: 800% 800%;
+    }
+
+    @keyframes neonBackground {
+      0% { background-position: 0% 50%; background-image: linear-gradient(90deg, #ff00ff, #00ffff, #00ff00, #ffff00, #ff0000); }
+      25% { background-position: 25% 50%; background-image: linear-gradient(90deg, #00ffff, #00ff00, #ffff00, #ff0000, #ff00ff); }
+      50% { background-position: 50% 50%; background-image: linear-gradient(90deg, #00ff00, #ffff00, #ff0000, #ff00ff, #00ffff); }
+      75% { background-position: 75% 50%; background-image: linear-gradient(90deg, #ffff00, #ff0000, #ff00ff, #00ffff, #00ff00); }
+      100% { background-position: 100% 50%; background-image: linear-gradient(90deg, #ff0000, #ff00ff, #00ffff, #00ff00, #ffff00); }
+    }
+
+    .monkey.ultra-fiestero-dance { animation: groove 0.45s ease-in-out infinite; }
+    .monkey.ultra-fiestero-dance + .shadow { animation-duration: 0.45s; }
+    .head.ultra-fiestero-dance { animation: headBob 0.45s ease-in-out infinite; }
+    .ear.ultra-fiestero-dance { animation: earFlap 0.2s ease-in-out infinite alternate; }
+    .nose.ultra-fiestero-dance { animation: noseWiggle 0.5s infinite ease-in-out; }
+    .party-hat.ultra-fiestero-dance { animation: hatWobble 0.2s ease-in-out infinite alternate; }
+    .hat-pompom.ultra-fiestero-dance { animation: pompom 0.2s ease-in-out infinite alternate; }
+    .arm.left.ultra-fiestero-dance { animation: armL 0.45s ease-in-out infinite; }
+    .arm.right.ultra-fiestero-dance { animation: armR 0.45s ease-in-out infinite; }
+    .leg.left.ultra-fiestero-dance { animation: legL 0.45s ease-in-out infinite; }
+    .leg.right.ultra-fiestero-dance { animation: legR 0.45s ease-in-out infinite; }
+    .tail.ultra-fiestero-dance { animation: tailWag 0.2s ease-in-out infinite alternate; }
+    .tail-tip.ultra-fiestero-dance { animation: tailTipBounce 0.3s infinite ease-in-out; }
+
+    /* Animaciones generales */
+    @keyframes noseWiggle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    @keyframes neonRainbowShift {
+      0% { filter: drop-shadow(0 0 10px #00FFFF) hue-rotate(0deg) brightness(1.5); }
+      25% { filter: drop-shadow(0 0 15px #FF00FF) hue-rotate(90deg) brightness(2); }
+      50% { filter: drop-shadow(0 0 20px #00FF00) hue-rotate(180deg) brightness(1.8); }
+      75% { filter: drop-shadow(0 0 15px #FFFF00) hue-rotate(270deg) brightness(2.2); }
+      100% { filter: drop-shadow(0 0 10px #00FFFF) hue-rotate(360deg) brightness(1.5); }
+    }
+
+    @keyframes tailTipBounce {
+      0%, 100% { transform: scale(1) translateY(0px); }
+      50% { transform: scale(1.2) translateY(-2px); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="confeti-container" id="confeti-container"></div>
+
+  <div class="invitacion">
+    <h1 class="title">Acceso VIP ⭐😎 (monkey fest)</h1>
+    <p><strong>📅 Fecha:</strong> Sábado 3 de octubre<br>
+      <strong>🕕 Hora:</strong> 5:00 PM<br>
+      <strong>📍 Lugar:</strong> Cerrada 14 de Febrero No. 4, Col. <Ocotal, Magdalena C. C.P. 10630, CDMX 😄</p>
+
+
+    <div class="party-container">
+      <h1 class="title">¡NO FALTES TQM! 💖</h1>
+      <div class="monkey-container">
+        <div class="monkey" id="animatedMonkey">
+          <div class="tail" id="monkeyTail">
+            <div class="tail-tip" id="monkeyTailTip"></div>
+          </div>
+          <div class="leg left" id="monkeyLegLeft"></div>
+          <div class="leg right" id="monkeyLegRight"></div>
+          <div class="arm left" id="monkeyArmLeft"></div>
+          <div class="arm right" id="monkeyArmRight"></div>
+          <div class="head" id="monkeyHead">
+            <div class="party-hat" id="monkeyHat">
+              <div class="hat-stripes"></div>
+              <div class="hat-pompom" id="monkeyPompom"></div>
+            </div>
+            <div class="ear left" id="monkeyEarLeft"></div>
+            <div class="ear right" id="monkeyEarRight"></div>
+            <div class="face"></div>
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+            <div class="nose" id="monkeyNose"></div>
+            <div class="mouth"></div>
+          </div>
+        </div>
+        <div class="shadow"></div>
+      </div>
+    </div>
+
+    <div id="reloj">00 : 00 : 00 : 00</div>
+    <div class="etiquetas">
+      <span>Días</span>
+      <span>Horas</span>
+      <span>Min</span>
+      <span>Seg</span>
+    </div>
+
+    <div class="botones">
+      <button id="btnAsistir" class="asistir">¡Asistiré!</button>
+      <button id="btnTalvez" class="talvez">Tal vez asistiré</button>
+      <button id="modoFiestaBtn">🕹️ Activar Modo Fiesta</button>
+      <button id="modoUltraFiestaBtn">🚀 Modo Ultra Fiesta</button>
+      <button class="btn-musica" onclick="toggleMusica(event)">▶ Reproducir música</button>
+    </div>
+
+    <div class="ubicacion">
+      <a href="https://maps.app.goo.gl/ZhyCEjkxzw7q6JHP9" target="_blank">Ver ubicación en Google Maps</a>
+    </div>
+  </div>
+
+  <iframe id="audioFrame"
+    src=""
+    style="display: none;"
+    allow="autoplay">
+  </iframe>
+
+  <script>
+    // Código JavaScript
+    let reproduciendo = false;
+    const frame = document.getElementById("audioFrame");
+    const musicaURL= "https://vocaroo.com/embed/1jHoWGhKcXcQ?autoplay=1";
+
+    function toggleMusica(event) {
+      event.stopPropagation();
+      const boton = event.target;
+      if (!reproduciendo) {
+        frame.src = musicaURL;
+        boton.textContent = "⏸ Pausar música";
+        reproduciendo = true;
+      } else {
+        frame.src = "";
+        boton.textContent = "▶ Reproducir música";
+        reproduciendo = false;
+      }
+    }
+
+    document.body.addEventListener("click", () => {
+      if (!reproduciendo) {
+        frame.src = musicaURL;
+        const boton = document.querySelector(".btn-musica");
+        if (boton) boton.textContent = "⏸ Pausar música";
+        reproduciendo = true;
+      }
+    }, { once: true });
+
+    // Confeti
+    const contenedor = document.getElementById("confeti-container");
+    const coloresConfeti = ["#007BFF", "rgb(127,0,0)", "#FFC107", "#28A745", "#FF69B4"];
+
+    for (let i = 0; i < 100; i++) {
+      const pieza = document.createElement("div");
+      pieza.classList.add("confeti-piece");
+      pieza.style.left = Math.random() * 100 + "vw";
+      const tam = 15 + Math.random() * 10;
+      pieza.style.width = tam + "px";
+      pieza.style.height = tam + "px";
+      pieza.style.backgroundColor = coloresConfeti[Math.floor(Math.random() * coloresConfeti.length)];
+      pieza.style.animationDuration = (1.5 + Math.random() * 2) + "s";
+      pieza.style.animationDelay = (Math.random() * 4) + "s";
+      pieza.style.animationDirection = Math.random() > 0.5 ? "normal" : "reverse";
+      contenedor.appendChild(pieza);
+    }
+
+    // Reloj
+    const reloj = document.getElementById("reloj");
+    const fechaEvento = new Date("2026-10-03T17:00:00").getTime();
+
+    function actualizarReloj() {
+      const ahora = new Date().getTime();
+      const restante = fechaEvento - ahora;
+
+      if (restante <= 0) {
+        reloj.innerHTML = "00 : 00 : 00 : 00";
+        return;
+      }
+
+      const dias = String(Math.floor(restante / (1000 * 60 * 60 * 24))).padStart(2, "0");
+      const horas = String(Math.floor((restante / (1000 * 60 * 60)) % 24)).padStart(2, "0");
+      const min = String(Math.floor((restante / (1000 * 60)) % 60)).padStart(2, "0");
+      const seg = String(Math.floor((restante / 1000) % 60)).padStart(2, "0");
+
+      reloj.innerHTML = `${dias} : ${horas} : ${min} : ${seg}`;
+    }
+
+    setInterval(actualizarReloj, 1000);
+    actualizarReloj();
+
+    // Modo fiesta
+    const btnFiesta = document.getElementById('modoFiestaBtn');
+    const invitacion = document.querySelector('.invitacion');
+    let fiestaActiva = false;
+
+    btnFiesta.addEventListener('click', () => {
+      fiestaActiva = !fiestaActiva;
+
+      if (fiestaActiva) {
+        document.body.classList.add('fiestero');
+        invitacion.classList.add('fiestera');
+        btnFiesta.textContent = '🛑 Desactivar Modo Fiesta';
+        btnFiesta.style.background = '#111';
+      } else {
+        document.body.classList.remove('fiestero');
+        invitacion.classList.remove('fiestera');
+        btnFiesta.textContent = '🕹️ Activar Modo Fiesta';
+        btnFiesta.style.background = '#ff00ff';
+      }
+    });
+
+    // Modo Ultra Fiesta
+    const btnUltraFiesta = document.getElementById('modoUltraFiestaBtn');
+    const animatedMonkey = document.getElementById('animatedMonkey');
+    const monkeyHead = document.getElementById('monkeyHead');
+    const monkeyEarLeft = document.getElementById('monkeyEarLeft');
+    const monkeyEarRight = document.getElementById('monkeyEarRight');
+    const monkeyNose = document.getElementById('monkeyNose');
+    const monkeyHat = document.getElementById('monkeyHat');
+    const monkeyPompom = document.getElementById('monkeyPompom');
+    const monkeyArmLeft = document.getElementById('monkeyArmLeft');
+    const monkeyArmRight = document.getElementById('monkeyArmRight');
+    const monkeyLegLeft = document.getElementById('monkeyLegLeft');
+    const monkeyLegRight = document.getElementById('monkeyLegRight');
+    const monkeyTail = document.getElementById('monkeyTail');
+    const monkeyTailTip = document.getElementById('monkeyTailTip');
+
+    let ultraFiestaActiva = false;
+
+    btnUltraFiesta.addEventListener('click', () => {
+        ultraFiestaActiva = !ultraFiestaActiva;
+
+        if (ultraFiestaActiva) {
+            document.body.classList.add('ultra-fiestero');
+            animatedMonkey.classList.add('ultra-fiestero-dance');
+            monkeyHead.classList.add('ultra-fiestero-dance');
+            monkeyEarLeft.classList.add('ultra-fiestero-dance');
+            monkeyEarRight.classList.add('ultra-fiestero-dance');
+            monkeyNose.classList.add('ultra-fiestero-dance');
+            monkeyHat.classList.add('ultra-fiestero-dance');
+            monkeyPompom.classList.add('ultra-fiestero-dance');
+            monkeyArmLeft.classList.add('ultra-fiestero-dance');
+            monkeyArmRight.classList.add('ultra-fiestero-dance');
+            monkeyLegLeft.classList.add('ultra-fiestero-dance');
+            monkeyLegRight.classList.add('ultra-fiestero-dance');
+            monkeyTail.classList.add('ultra-fiestero-dance');
+            monkeyTailTip.classList.add('ultra-fiestero-dance');
+
+            btnUltraFiesta.textContent = '🐢 Desactivar Ultra Fiesta';
+            btnUltraFiesta.style.background = '#000';
+            btnUltraFiesta.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.7)';
+        } else {
+            document.body.classList.remove('ultra-fiestero');
+            animatedMonkey.classList.remove('ultra-fiestero-dance');
+            monkeyHead.classList.remove('ultra-fiestero-dance');
+            monkeyEarLeft.classList.remove('ultra-fiestero-dance');
+            monkeyEarRight.classList.remove('ultra-fiestero-dance');
+            monkeyNose.classList.remove('ultra-fiestero-dance');
+            monkeyHat.classList.remove('ultra-fiestero-dance');
+            monkeyPompom.classList.remove('ultra-fiestero-dance');
+            monkeyArmLeft.classList.remove('ultra-fiestero-dance');
+            monkeyArmRight.classList.remove('ultra-fiestero-dance');
+            monkeyLegLeft.classList.remove('ultra-fiestero-dance');
+            monkeyLegRight.classList.remove('ultra-fiestero-dance');
+            monkeyTail.classList.remove('ultra-fiestero-dance');
+            monkeyTailTip.classList.remove('ultra-fiestero-dance');
+
+            btnUltraFiesta.textContent = '🚀 Modo Ultra Fiesta';
+            btnUltraFiesta.style.background = '#ff00ff';
+            btnUltraFiesta.style.boxShadow = '0 0 10px rgba(255, 0, 255, 0.5)';
+        }
+    });
+
+    // Formulario de confirmación
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScdC7TZOciCljjtMY_WMZTzQimS5xSint215UV4z7xDZXKa0g/formResponse";
+    const entryNombre = "entry.1200692340";
+    const entryAsistencia = "entry.275674261";
+    const entryCompania = "entry.904153986";
+
+    const btnAsistir = document.getElementById('btnAsistir');
+    const btnTalvez = document.getElementById('btnTalvez');
+
+    const popup = document.createElement('div');
+    popup.className = 'confirmacion-popup';
+    document.body.appendChild(popup);
+
+    function mostrarPopup(mensaje) {
+      popup.textContent = mensaje;
+      popup.classList.add('mostrar');
+      setTimeout(() => {
+        popup.classList.remove('mostrar');
+      }, 3000);
+    }
+
+    function mostrarFormularioAsistencia(asistenciaTipo) {
+      const modal = document.createElement('div');
+      Object.assign(modal.style, {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        background: 'linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)',
+        borderRadius: '16px',
+        boxShadow: '0 8px 24px rgba(37, 117, 252, 0.6)',
+        padding: '30px 35px',
+        zIndex: '10000',
+        fontFamily: "'Fredoka', sans-serif",
+        color: 'white',
+        minWidth: '320px',
+        maxWidth: '400px',
+        textAlign: 'center',
+        opacity: '0',
+        transition: 'opacity 0.3s ease, transform 0.3s ease',
+      });
+
+      modal.innerHTML = `
+        <h2 style="margin-bottom: 10px; font-weight: 700;">Confirma tu asistencia</h2>
+        <p style="margin-bottom: 20px; font-size: 15px;">Has seleccionado: <strong>${asistenciaTipo === "Siii" ? "¡Asistiré!" : "Tal vez asistiré"}</strong></p>
+        <label style="display: block; margin-bottom: 15px; text-align: left; font-weight: 600; font-size: 15px;">
+          Tu nombre:<br>
+          <input type="text" id="nombreInvitado" style="width: 100%; padding: 10px 12px; margin-top: 8px; border-radius: 10px; border: none; font-size: 14px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2); font-family: 'Fredoka', sans-serif;" />
+        </label>
+        <label style="display: block; margin-bottom: 25px; text-align: left; font-weight: 600; font-size: 15px;">
+          ¿Vendrás acompañado(a)?<br>
+          <select id="acompanado" style="width: 100%; padding: 10px 12px; margin-top: 8px; border-radius: 10px; border: none; font-size: 14px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2); background: white; color: #333; cursor: pointer; font-family: 'Fredoka', sans-serif;">
+            <option value="">Selecciona una opción</option>
+            <option value="Sí">Sí</option>
+            <option value="No">No</option>
+            <option value="Tal vez">Tal vez</option>
+          </select>
+        </label>
+        <button id="enviarConfirmacion" style="background: linear-gradient(90deg, #ff416c, #ff4b2b); color: white; padding: 12px 30px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 6px 15px rgba(255,75,43,0.6);">
+          Enviar
+        </button>
+        <button id="cancelarConfirmacion" style="flex: 1; background: #555; color: white; padding: 12px 30px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer;">
+          Cancelar
+        </button>
+      `;
+      document.body.appendChild(modal);
+
+      setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.style.transform = 'translate(-50%, -50%) scale(1)';
+      }, 10);
+
+      document.getElementById('enviarConfirmacion').addEventListener('click', () => {
+        const nombre = document.getElementById('nombreInvitado').value;
+        const compania = document.getElementById('acompanado').value;
+        if (nombre && compania) {
+          const formData = new FormData();
+          formData.append(entryNombre, nombre);
+          formData.append(entryAsistencia, asistenciaTipo);
+          formData.append(entryCompania, compania);
+
+          fetch(formURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData,
+          }).then(() => {
+            mostrarPopup('¡Confirmación enviada! 🎉');
+            modal.remove();
+          }).catch(error => {
+            console.error('Error al enviar el formulario:', error);
+            mostrarPopup('Error, intenta de nuevo. 😞');
+            modal.remove();
+          });
+        } else {
+          mostrarPopup('Por favor, llena todos los campos.');
+        }
+      });
+
+      document.getElementById('cancelarConfirmacion').addEventListener('click', () => {
+        modal.remove();
+      });
+
+    }
+
+    btnAsistir.addEventListener('click', () => mostrarFormularioAsistencia("Siii"));
+    btnTalvez.addEventListener('click', () => mostrarFormularioAsistencia("Tal vez"));
+  </script>
+</body>
+</html>
